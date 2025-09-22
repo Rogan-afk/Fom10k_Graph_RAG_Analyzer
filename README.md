@@ -1,102 +1,151 @@
 # Corporate Filing Analysis Suite
 
 ## Table of Contents
-- [Overview: From Documents to Decisions](#overview-from-documents-to-decisions)
-- [What is a Knowledge Graph?](#what-is-a-knowledge-graph)
-- [What is RAG?](#what-is-rag)
-- [The Power of Combining KG & RAG for 10-Ks](#the-power-of-combining-kg--rag-for-10-ks)
-- [Features](#features)
-- [System Architecture](#system-architecture)
-- [Getting Started: A Beginner-Friendly Guide](#getting-started-a-beginner-friendly-guide)
-  - [Step 1: Set Up Your Workspace](#step-1-set-up-your-workspace)
-  - [Step 2: Install the Necessary Tools](#step-2-install-the-necessary-tools)
-  - [Step 3: Connect to the AI Brain](#step-3-connect-to-the-ai-brain)
-  - [Step 4: Launch the Application](#step-4-launch-the-application)
-- [How to Use the Suite: A Quick Manual](#how-to-use-the-suite-a-quick-manual)
-- [Project Directory Structure](#project-directory-structure)
+- [Overview: From Documents to Decisions](#overview-from-documents-to-decisions)  
+- [What is a Knowledge Graph?](#what-is-a-knowledge-graph)  
+- [What is RAG?](#what-is-rag)  
+- [The Power of Combining KG & RAG for 10-Ks](#the-power-of-combining-kg--rag-for-10-ks)  
+- [Features](#features)  
+- [System Architecture](#system-architecture)  
+- [Getting Started: A Beginner-Friendly Guide](#getting-started-a-beginner-friendly-guide)  
+  - [Step 1: Set Up Your Workspace](#step-1-set-up-your-workspace)  
+  - [Step 2: Install the Necessary Tools](#step-2-install-the-necessary-tools)  
+  - [Step 3: Connect to the AI Brain](#step-3-connect-to-the-ai-brain)  
+  - [Step 4: Launch the Application](#step-4-launch-the-application)  
+- [How to Use the Suite: A Quick Manual](#how-to-use-the-suite-a-quick-manual)  
+- [Project Directory Structure](#project-directory-structure)  
 
 ---
 
 ## Overview: From Documents to Decisions
-The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10‑K filings. These filings are converted into interactive knowledge graphs so that users can visualize entities and relationships and ask natural‑language questions for targeted, evidence‑based answers.
+The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10-K filings.  
+
+These filings are converted into interactive knowledge graphs so that users can **visualize entities and relationships** and **ask natural-language questions** for targeted, evidence-based answers.
 
 ---
 
 ## What is a Knowledge Graph?
-A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex knowledge graphs can be expensive to generate and may induce high latency.
-**Example (A complex KG with duplicates):**  
-<img width="1284" height="862" alt="complex-kg" src="https://github.com/user-attachments/assets/be02c074-4f43-411e-a24b-8ca97ab3ae38" />
+A **Knowledge Graph (KG)** represents information as a network of **entities (nodes)** and **relationships (edges)**.  
 
+Complex knowledge graphs can be expensive to generate and may induce high latency.
 
+---
 
-An optimal graph captures key entity–relationship pairs without duplication—especially important for long, information‑dense 10‑K documents.
+### Example: A Complex KG (with duplicates)
+<p align="center">
+  <img width="1284" height="862" alt="complex-kg" src="https://github.com/user-attachments/assets/be02c074-4f43-411e-a24b-8ca97ab3ae38" />
+</p>
 
-**Example (A more optimal KG):**  
-<img width="809" height="625" alt="optimal-kg" src="https://github.com/user-attachments/assets/35ce254f-bf9e-4abe-bd7e-7bbc395ef658" />
+---
 
-The first step towards an optimal KG is to define the entitiy ontology
-We define the entity ontology for Form 10-Ks as:
-<img width="720" height="40" alt="image" src="https://github.com/user-attachments/assets/4431f15d-e9d7-46d3-aef2-6a15b9d59203" />
+An optimal graph captures key entity–relationship pairs **without duplication**—especially important for long, information-dense 10-K documents.
 
+---
 
-Extraction of entities: 
-For a given document D:
-<img width="599" height="288" alt="image" src="https://github.com/user-attachments/assets/7403df1b-2557-4702-8e56-ea36c713607c" />
+### Example: A More Optimal KG
+<p align="center">
+  <img width="809" height="625" alt="optimal-kg" src="https://github.com/user-attachments/assets/35ce254f-bf9e-4abe-bd7e-7bbc395ef658" />
+</p>
 
+---
 
-Relation Formation:
-We use an LLM to induce relations between extracted entities. Let the relation set be
-R = {OWNS, OPERATES, REPORTS, SUBJECT TO, MENTIONS, ASSOCIATED WITH}.
+### Ontology of Entities
+The first step towards an optimal KG is to define the entity ontology:  
 
-The extracted edge set is:
-<img width="373" height="44" alt="image" src="https://github.com/user-attachments/assets/0e4d1c88-e3b5-4d9c-a31c-bca30acd7789" />
+<p align="center">
+  <img width="720" height="40" alt="ontology" src="https://github.com/user-attachments/assets/4431f15d-e9d7-46d3-aef2-6a15b9d59203" />
+</p>
 
-Relation Examples:
-<img width="453" height="129" alt="image" src="https://github.com/user-attachments/assets/47c64d8b-794f-409f-b8c6-adbf2b700630" />
+---
 
+### Entity Extraction
+For a given document **D**:  
 
-The knowledge graph is defined as :
+<p align="center">
+  <img width="599" height="288" alt="entity-extraction" src="https://github.com/user-attachments/assets/7403df1b-2557-4702-8e56-ea36c713607c" />
+</p>
 
-<img width="385" height="42" alt="image" src="https://github.com/user-attachments/assets/f234731d-46c0-4562-9894-c5cb6a2217df" />
+---
 
-In short, each Form 10-K becomes a graph:
-<img width="597" height="44" alt="image" src="https://github.com/user-attachments/assets/e44431e1-e489-441c-b00c-39e036ec4bcc" />
+### Relation Formation
+We use an LLM to induce relations between extracted entities.  
 
-This allows structured queries like:
-• “What risks are linked to UnitedHealth Group in 2024?”
-• “Which segments contribute to reported revenue?
+Let the relation set be:  
+**R = {OWNS, OPERATES, REPORTS, SUBJECT TO, MENTIONS, ASSOCIATED WITH}**
+
+Extracted edge set:  
+
+<p align="center">
+  <img width="373" height="44" alt="edge-set" src="https://github.com/user-attachments/assets/0e4d1c88-e3b5-4d9c-a31c-bca30acd7789" />
+</p>
+
+---
+
+### Relation Examples
+<p align="center">
+  <img width="453" height="129" alt="relation-examples" src="https://github.com/user-attachments/assets/47c64d8b-794f-409f-b8c6-adbf2b700630" />
+</p>
+
+---
+
+### Knowledge Graph Definition
+<p align="center">
+  <img width="385" height="42" alt="knowledge-graph" src="https://github.com/user-attachments/assets/f234731d-46c0-4562-9894-c5cb6a2217df" />
+</p>
+
+---
+
+### Form 10-K as a Graph
+In short, each Form 10-K becomes a graph:  
+
+<p align="center">
+  <img width="597" height="44" alt="graph-summary" src="https://github.com/user-attachments/assets/e44431e1-e489-441c-b00c-39e036ec4bcc" />
+</p>
+
+---
+
+### Example Structured Queries
+- “What risks are linked to UnitedHealth Group in 2024?”  
+- “Which segments contribute to reported revenue?”  
 
 ---
 
 ## What is RAG?
-**Retrieval‑Augmented Generation (RAG)** combines retrieval and generation. Before answering, the system retrieves relevant context (here, from the knowledge graph) to ground responses in verifiable information.
+**Retrieval-Augmented Generation (RAG)** combines **retrieval** and **generation**.  
+
+Before answering, the system retrieves **relevant context** (here, from the knowledge graph) to ground responses in verifiable information.
 
 ---
 
 ## The Power of Combining KG & RAG for 10-Ks
-Combining KG and RAG yields structured, context‑aware answers. Instead of matching text fragments, the system follows connections in the graph to answer questions such as:
-- “What risks are linked to the Optum Health segment?”  
-- “Which executives are associated with the company’s primary revenue sources?”
+Combining KG and RAG yields structured, context-aware answers.  
 
-This provides faster, more accurate insights than simple text search.
+Instead of matching text fragments, the system **follows graph connections** to answer questions such as:
+- “What risks are linked to the Optum Health segment?”  
+- “Which executives are associated with the company’s primary revenue sources?”  
+
+This provides **faster, more accurate insights** than simple text search.
 
 ---
 
 ## Features
-- **Interactive Dashboard**: Professional, multi‑tab UI for streamlined workflows.  
-- **Intelligent 10‑K Parsing**: Extraction of key sections for focused analysis.  
-- **Comprehensive Knowledge Graph**: High‑precision mapping of entities and relationships.  
-- **Immersive Graph Explorer**: Interactive visualization with zoom, drag, and pan.  
-- **Conversational Q&A**: KG‑RAG integration for grounded answers.  
-- **Efficient File Management**: PDF uploads, caching, and secure deletion.  
-- **Responsive Performance**: Asynchronous background processing.  
+- **Interactive Dashboard** – Professional, multi-tab UI for streamlined workflows.  
+- **Intelligent 10-K Parsing** – Extraction of key sections for focused analysis.  
+- **Comprehensive Knowledge Graph** – High-precision mapping of entities and relationships.  
+- **Immersive Graph Explorer** – Interactive visualization with zoom, drag, and pan.  
+- **Conversational Q&A** – KG-RAG integration for grounded answers.  
+- **Efficient File Management** – PDF uploads, caching, and secure deletion.  
+- **Responsive Performance** – Asynchronous background processing.  
 
 ---
 
 ## System Architecture
-The **Dash frontend (Gradio web UI)** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
+The **Dash frontend (Gradio web UI)** provides the user interface.  
+The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram (strict Mermaid, ASCII‑safe)
+---
+
+### Simplified Architecture Diagram
 ```mermaid
 flowchart LR
     U["User"]
@@ -119,7 +168,9 @@ flowchart LR
     D --> G
 ```
 
-### Detailed Workflow Diagram (strict Mermaid, ASCII‑safe)
+---
+
+### Detailed Workflow Diagram
 ```mermaid
 sequenceDiagram
     actor User
@@ -161,18 +212,17 @@ sequenceDiagram
 ## Getting Started: A Beginner-Friendly Guide
 
 ### Step 1: Set Up Your Workspace
-Clone the repository or download the source as a ZIP archive.
 ```bash
 git clone <your-repository-url>
 cd corporate-filing-analysis-suite
 ```
 
 ### Step 2: Install the Necessary Tools
-Create and activate a virtual environment, then install dependencies.
 ```bash
 # Windows
 python -m venv venv
-.\venv\Scripts\activate
+.
+env\Scripts ctivate
 
 # macOS/Linux
 python3 -m venv venv
@@ -182,7 +232,6 @@ pip install -r requirements.txt
 ```
 
 ### Step 3: Connect to the AI Brain
-Create a `.env` file in the project root:
 ```bash
 OPENAI_API_KEY="sk-..."
 ```
@@ -191,24 +240,25 @@ OPENAI_API_KEY="sk-..."
 ```bash
 python app.py
 ```
-Open **http://127.0.0.1:8050** in your browser.
+
+Then open **http://127.0.0.1:8050** in your browser.
 
 ---
 
 ## How to Use the Suite: A Quick Manual
 
 ### Document Management
-- **Upload** a 10‑K PDF.  
-- **Process** the document to extract text and generate the graph.  
+- **Upload** a 10-K PDF.  
+- **Process** to extract text and generate the graph.  
 - **Delete** a file and its cached artifacts when no longer needed.  
 
 ### Graph Explorer
 - **View** the generated knowledge graph.  
-- **Interact** by moving nodes and zooming to inspect relationships.  
+- **Interact** with nodes: drag, zoom, and inspect relationships.  
 
 ### Query & Analysis
 - **Select** a processed document.  
-- **Ask** questions; the system responds using KG‑RAG context.  
+- **Ask** questions; the system responds using KG-RAG context.  
 
 ---
 
@@ -228,5 +278,3 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
-
-
