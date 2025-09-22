@@ -26,33 +26,40 @@ The **Corporate Filing Analysis Suite** assists in interpreting complex financia
 A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex Knowledge graphs are often "expensive" to generate and induce high latency times. An optimal knowledge graph that captures key entity-relationship pairs for the most significant details, especially for complex financial documents like theForm 10K . For Form 10-Ks, the ontology of entities is:
 
 $$
-\mathcal{E} = \{ \text{Company}, \text{Segment}, \text{Risk}, \text{Financial}, \text{Regulation}, \text{Executive}, \text{Event} \}
+\mathcal{E} = \{ \mathrm{Company},\mathrm{Segment},\mathrm{Risk},\mathrm{Financial},\mathrm{Regulation},\mathrm{Executive},\mathrm{Event} \}
 $$
 
 Entities extracted from a document $D$ are:
 $$
-\mathcal{V}(D) = \{ v_1, v_2, \ldots, v_n \}, \quad v_k \in \mathcal{E}.
+\mathcal{V}(D)=\{v_1,\dots,v_n\},\quad v_k\in\mathcal{E}
 $$
 
 Relations between entities are:
 $$
-R(D) = \{ (v_i, r, v_j) \mid v_i, v_j \in \mathcal{V}(D),\ r \in \mathcal{R} \},
+R(D)=\{(v_i,r,v_j)\mid v_i,v_j\in\mathcal{V}(D),\ r\in\mathcal{R}\}
 $$
+
 with
 $$
-\mathcal{R} = \{ \texttt{OWNS}, \texttt{OPERATES}, \texttt{REPORTS}, \texttt{SUBJECT\_TO}, \texttt{MENTIONS}, \texttt{ASSOCIATED\_WITH} \}.
+\mathcal{R}=\{\mathrm{OWNS},\mathrm{OPERATES},\mathrm{REPORTS},\mathrm{SUBJECT\_TO},\mathrm{MENTIONS},\mathrm{ASSOCIATED\_WITH}\}
 $$
 
 **Examples**
 $$
-(\text{UnitedHealth Group}, \texttt{OWNS}, \text{Optum Health}) \\
-(\text{UnitedHealth Group}, \texttt{REPORTS}, \text{Revenue = \$372B}) \\
-(\text{UnitedHealth Group}, \texttt{SUBJECT\_TO}, \text{Regulatory risk})
+(\mathrm{UnitedHealth\ Group},\ \mathrm{OWNS},\ \mathrm{Optum\ Health})
+$$
+
+$$
+(\mathrm{UnitedHealth\ Group},\ \mathrm{REPORTS},\ \mathrm{Revenue}=\$372\,\mathrm{B})
+$$
+
+$$
+(\mathrm{UnitedHealth\ Group},\ \mathrm{SUBJECT\_TO},\ \mathrm{Regulatory\ risk})
 $$
 
 The knowledge graph is:
 $$
-\mathcal{G}(D) = (\mathcal{V}, \mathcal{E}).
+\mathcal{G}(D)=(\mathcal{V},\mathcal{E})
 $$
 
 ---
@@ -85,28 +92,16 @@ This results in faster, more accurate insights than simple text search.
 ## System Architecture
 The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram
+### Simplified Architecture Diagram (GitHub‑safe)
 ```mermaid
 graph TD
-    subgraph User_Interface
-        A[Dash Frontend (app.py)]
-    end
-
-    subgraph Backend_Services_Python
-        B[File & Cache Manager
-file_manager.py]
-        C[10-K Text Processor
-text_processor.py]
-        D[Knowledge Graph Engine
-graph_generator.py]
-        E[RAG Chat System
-graph_rag.py]
-    end
-
-    subgraph External_and_Storage
-        F[OpenAI API (gpt-4o)]
-        G[File System (Uploads & Cache)]
-    end
+    A[Dash Frontend]
+    B[File & Cache Manager]
+    C[10-K Text Processor]
+    D[Knowledge Graph Engine]
+    E[RAG Chat System]
+    F[OpenAI API]
+    G[File System (Uploads & Cache)]
 
     A --> B
     A --> E
@@ -118,7 +113,7 @@ graph_rag.py]
     D --> G
 ```
 
-### Detailed Workflow Diagram
+### Detailed Workflow Diagram (GitHub‑safe)
 ```mermaid
 sequenceDiagram
     actor User
@@ -127,7 +122,7 @@ sequenceDiagram
     participant Cache as File System
     participant OpenAI as OpenAI API
 
-    Note over User,OpenAI: 1) Document Processing
+    Note over User,OpenAI: Document Processing
     User->>App: Upload 10-K PDF
     App->>Services: Save file
     Services->>Cache: Store in /uploads
@@ -135,24 +130,24 @@ sequenceDiagram
     App->>User: Update file list
 
     User->>App: Click "Process Document"
-    App->>Services: Process PDF (text_processor)
-    Services->>Cache: Write text to /processed_texts
-    Services->>Services: Generate graph (graph_generator)
+    App->>Services: Process PDF
+    Services->>Cache: Write to /processed_texts
+    Services->>Services: Generate graph
     Services->>OpenAI: Send text chunks
-    OpenAI-->>Services: Return structured graph (JSON)
+    OpenAI-->>Services: Return structured graph
     Services->>Cache: Write graph.json to /graphs
     Services->>App: Return graph data
     App->>User: Display graph
 
-    Note over User,OpenAI: 2) Query & Analysis
+    Note over User,OpenAI: Query & Analysis
     User->>App: Ask question
-    App->>Services: Query RAG (graph_rag)
+    App->>Services: Query RAG
     Services->>Cache: Verify graph.json exists
     Cache-->>Services: Confirmed
-    Services->>OpenAI: Send analyst prompt
+    Services->>OpenAI: Send prompt
     OpenAI-->>Services: Return answer
     Services->>App: Send answer
-    App->>User: Show chat response
+    App->>User: Show response
 ```
 
 ---
@@ -228,4 +223,3 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
-
