@@ -23,40 +23,48 @@ The **Corporate Filing Analysis Suite** assists in interpreting complex financia
 ---
 
 ## What is a Knowledge Graph?
-A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex knowledge graphs can be expensive to generate and may induce high latency. An optimal graph captures key entity–relationship pairs without duplication—especially important for long, information‑dense 10‑K documents.
+A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex knowledge graphs can be expensive to generate and may induce high latency.
+**Example (A complex KG with duplicates):**  
+<img width="1284" height="862" alt="complex-kg" src="https://github.com/user-attachments/assets/be02c074-4f43-411e-a24b-8ca97ab3ae38" />
 
-For 10‑Ks, the entity ontology is:
-$$
-\mathcal{E}=\{\mathrm{Company},\mathrm{Segment},\mathrm{Risk},\mathrm{Financial},\mathrm{Regulation},\mathrm{Executive},\mathrm{Event}\}
-$$
 
-Entities extracted from a document \(D\) are
-$$
-\mathcal{V}(D)=\{v_1,\dots,v_n\},\quad v_k\in\mathcal{E}.
-$$
 
-Relations between entities are
-$$
-R(D)=\{(v_i,r,v_j)\mid v_i,v_j\in\mathcal{V}(D),\ r\in\mathcal{R}\},
-$$
-with
-$$
-\mathcal{R}=\{\mathrm{OWNS},\mathrm{OPERATES},\mathrm{REPORTS},\mathrm{SUBJECT\_TO},\mathrm{MENTIONS},\mathrm{ASSOCIATED\_WITH}\}.
-$$
+An optimal graph captures key entity–relationship pairs without duplication—especially important for long, information‑dense 10‑K documents.
 
-**Examples:**
-$$
-(\mathrm{UnitedHealth\ Group},\ \mathrm{OWNS},\ \mathrm{Optum\ Health}),\quad
-(\mathrm{UnitedHealth\ Group},\ \mathrm{REPORTS},\ \mathrm{Revenue}=\$372\,\mathrm{B}),\quad
-(\mathrm{UnitedHealth\ Group},\ \mathrm{SUBJECT\_TO},\ \mathrm{Regulatory\ risk}).
-$$
+**Example (A more optimal KG):**  
+<img width="809" height="625" alt="optimal-kg" src="https://github.com/user-attachments/assets/35ce254f-bf9e-4abe-bd7e-7bbc395ef658" />
 
-The knowledge graph is
-$$
-\mathcal{G}(D)=(\mathcal{V},\mathcal{E}).
-$$
+The first step towards an optimal KG is to define the entitiy ontology
+We define the entity ontology for Form 10-Ks as:
+<img width="720" height="40" alt="image" src="https://github.com/user-attachments/assets/4431f15d-e9d7-46d3-aef2-6a15b9d59203" />
 
-> **Tip:** On GitHub, view the Markdown file (not Raw). KaTeX math will not render in Raw view.
+
+Extraction of entities: 
+For a given document D:
+<img width="599" height="288" alt="image" src="https://github.com/user-attachments/assets/7403df1b-2557-4702-8e56-ea36c713607c" />
+
+
+Relation Formation:
+We use an LLM to induce relations between extracted entities. Let the relation set be
+R = {OWNS, OPERATES, REPORTS, SUBJECT TO, MENTIONS, ASSOCIATED WITH}.
+
+The extracted edge set is:
+<img width="373" height="44" alt="image" src="https://github.com/user-attachments/assets/0e4d1c88-e3b5-4d9c-a31c-bca30acd7789" />
+
+Relation Examples:
+<img width="453" height="129" alt="image" src="https://github.com/user-attachments/assets/47c64d8b-794f-409f-b8c6-adbf2b700630" />
+
+
+The knowledge graph is defined as :
+
+<img width="385" height="42" alt="image" src="https://github.com/user-attachments/assets/f234731d-46c0-4562-9894-c5cb6a2217df" />
+
+In short, each Form 10-K becomes a graph:
+<img width="597" height="44" alt="image" src="https://github.com/user-attachments/assets/e44431e1-e489-441c-b00c-39e036ec4bcc" />
+
+This allows structured queries like:
+• “What risks are linked to UnitedHealth Group in 2024?”
+• “Which segments contribute to reported revenue?
 
 ---
 
@@ -220,4 +228,5 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
