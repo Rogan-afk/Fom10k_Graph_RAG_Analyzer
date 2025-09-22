@@ -1,104 +1,141 @@
 # Corporate Filing Analysis Suite
 
 ## Table of Contents
-- [Overview](#overview)
+- [Overview: From Documents to Decisions](#overview-from-documents-to-decisions)
+- [What is a Knowledge Graph?](#what-is-a-knowledge-graph)
+- [What is RAG?](#what-is-rag)
+- [The Power of Combining KG & RAG for 10-Ks](#the-power-of-combining-kg--rag-for-10-ks)
 - [Features](#features)
 - [System Architecture](#system-architecture)
-- [Core Components](#core-components)
-- [Setup & Installation](#setup--installation)
-- [Usage](#usage)
+- [Getting Started: A Beginner-Friendly Guide](#getting-started-a-beginner-friendly-guide)
+  - [Step 1: Set Up Your Workspace](#step-1-set-up-your-workspace)
+  - [Step 2: Install the Necessary Tools](#step-2-install-the-necessary-tools)
+  - [Step 3: Connect to the AI Brain](#step-3-connect-to-the-ai-brain)
+  - [Step 4: Launch the Application](#step-4-launch-the-application)
+- [How to Use the Suite: A Quick Manual](#how-to-use-the-suite-a-quick-manual)
 - [Project Directory Structure](#project-directory-structure)
 
 ---
 
-## Overview
-The **Corporate Filing Analysis Suite** is an enterprise-grade web application designed to transform dense SEC Form 10-K filings into high-fidelity, queryable knowledge graphs. The system intelligently parses PDFs to extract the most relevant sections, uses a high-precision AI model to build a detailed graph of entities and relationships, and provides a multi-tab dashboard for file management, interactive querying, and immersive graph exploration.
+## Overview: From Documents to Decisions
+The **Corporate Filing Analysis Suite** is designed to assist in the interpretation of complex financial documents, particularly SEC Form 10-Ks. These filings, often extending hundreds of pages, are transformed into interactive knowledge graphs that allow users to explore entities and their relationships. Instead of manually searching through text, users can visualize connections and pose natural language questions to obtain precise, data-supported insights.
 
-This tool is built using a modern Python stack, including **Dash** for the frontend, **LangChain** for orchestrating AI interactions, and **OpenAI's gpt-4o** for state-of-the-art text analysis and graph generation.
+---
+
+## What is a Knowledge Graph?
+A **Knowledge Graph (KG)** organizes information as a network of entities (nodes) and their relationships (edges). For Form 10-Ks, the ontology of extracted entities can be expressed as:
+
+\[
+\mathcal{E} = \{ \text{Company}, \text{Segment}, \text{Risk}, \text{Financial}, \text{Regulation}, \text{Executive}, \text{Event} \}
+\]
+
+Entities are extracted from the document:
+
+\[
+\mathcal{V}(D) = \{ v_1, v_2, \ldots, v_n \}, \quad v_k \in \mathcal{E}
+\]
+
+Relations between these entities form edges:
+
+\[
+R(D) = \{ (v_i, r, v_j) \mid v_i, v_j \in \mathcal{V}(D), r \in \mathcal{R} \}
+\]
+
+where the relation set is defined as:
+
+\[
+\mathcal{R} = \{ \texttt{OWNS}, \texttt{OPERATES}, \texttt{REPORTS}, \texttt{SUBJECT\_TO}, \texttt{MENTIONS}, \texttt{ASSOCIATED\_WITH} \}
+\]
+
+**Examples:**
+
+\[
+(\text{UnitedHealth Group}, \texttt{OWNS}, \text{Optum Health}) \\
+(\text{UnitedHealth Group}, \texttt{REPORTS}, \text{Revenue = \$372B}) \\
+(\text{UnitedHealth Group}, \texttt{SUBJECT\_TO}, \text{Regulatory risk})
+\]
+
+The resulting knowledge graph is represented as:
+
+\[
+\mathcal{G}(D) = (\mathcal{V}, \mathcal{E})
+\]
+
+---
+
+## What is RAG?
+**Retrieval-Augmented Generation (RAG)** enhances AI-based responses by combining retrieval and generation. Before generating an answer, the system retrieves contextually relevant data (here, from the knowledge graph) to ensure that outputs are grounded in authoritative sources.
+
+---
+
+## The Power of Combining KG & RAG for 10-Ks
+The integration of Knowledge Graphs and RAG offers a significant improvement in analyzing financial filings. While traditional retrieval methods return sentences, the KG-RAG framework provides structured, context-rich answers by leveraging graph connectivity.
+
+**Examples of supported queries:**
+- *“What risks are linked to the Optum Health segment?”*
+- *“Which executives are associated with the company’s main revenue sources?”*
+
+This approach ensures that insights are both faster and more accurate than conventional search-based methods.
 
 ---
 
 ## Features
-- **Interactive Dash Dashboard**: A professional, full-screen, three-tab user interface for a seamless workflow.  
-- **Intelligent 10-K Parsing**: Automatically identifies and extracts the most critical sections of a 10-K filing ("Business," "Risk Factors," and "Management's Discussion & Analysis").  
-- **High-Detail Knowledge Graph Generation**: Uses OpenAI’s advanced function-calling capabilities to extract comprehensive and accurate graphs of entities (Companies, Executives, Risks, Financials) and relationships.  
-- **Immersive Graph Visualization**: Renders the knowledge graph in a large, interactive explorer powered by **visdcc**.  
-- **Retrieval-Augmented Generation (RAG) Chat**: Enables natural language conversation with the processed document for insights and data points.  
-- **Robust File Management**: Supports PDF uploads, persistent caching of processed text and graphs, and secure deletion of documents with all related artifacts.  
-- **Asynchronous Processing**: Long-running AI tasks execute in the background to keep the interface responsive.  
+- **Interactive Dashboard**: A professional, multi-tab user interface for streamlined workflows.  
+- **Intelligent 10-K Parsing**: Automatic extraction of critical sections for analysis.  
+- **Comprehensive Knowledge Graph**: High-precision mapping of entities and their relationships.  
+- **Immersive Graph Explorer**: Interactive visualization with zoom, drag, and pan functionality.  
+- **Conversational Q&A**: Plain-English queries supported through KG-RAG integration.  
+- **Efficient File Management**: PDF uploads, cached storage, and secure deletion of artifacts.  
+- **Responsive Performance**: Asynchronous background task execution ensures fluid interactivity.  
 
 ---
 
 ## System Architecture
-The application is modular and efficient. The frontend, built with **Dash**, communicates with a Python backend orchestrating file management, text processing, and AI interactions. **Caching** ensures fast performance for previously processed documents.
+The system is structured for modularity and efficiency. The **Dash frontend** serves the interface, while the **Python backend** manages parsing, graph generation, and communication with external APIs.
 
-### Architecture Flow
+### Simplified Architecture Diagram
 ```mermaid
-sequenceDiagram
-    participant User
-    participant App as Dash Frontend (app.py)
-    participant TextProc as Text Processor
-    participant GraphGen as Graph Generator
-    participant Cache as File System (Cache)
-    participant OpenAI as OpenAI API
-    participant RAG as Graph RAG
+graph TD
+    subgraph "User Interface"
+        A[Dash Frontend<br>(app.py)]
+    end
 
-    User->>App: Uploads 10-K PDF
-    App->>Cache: Saves PDF to /uploads
-    Cache-->>App: Confirms Save
-    App-->>User: Updates File Dropdowns
+    subgraph "Backend Services (Python)"
+        B[File & Cache Manager<br>file_manager.py]
+        C[10-K Text Processor<br>text_processor.py]
+        D[Knowledge Graph Engine<br>graph_generator.py]
+        E[RAG Chat System<br>graph_rag.py]
+    end
 
-    User->>App: Selects file & clicks "Process"
-    App->>TextProc: process_pdf_to_text(pdf_path)
-    TextProc->>Cache: Reads PDF
-    TextProc-->>Cache: Writes extracted text
-    TextProc-->>App: Returns text
+    subgraph "External & Storage"
+        F[OpenAI API<br>(gpt-4o)]
+        G[File System<br>(Uploads & Cache)]
+    end
 
-    App->>GraphGen: generate_knowledge_graph(text)
-    GraphGen->>OpenAI: Sends text chunks
-    OpenAI-->>GraphGen: Returns structured graph data (JSON)
-    GraphGen->>Cache: Writes graph.json
-    GraphGen-->>App: Returns graph data
-    App-->>User: Displays graph
-
-    User->>App: Asks question in "Query & Analysis"
-    App->>RAG: query(filename, question)
-    RAG->>Cache: Checks graph.json
-    Cache-->>RAG: Confirms
-    Note over RAG,Cache: Single Source of Truth!
-
-    RAG->>OpenAI: Sends Analyst prompt
-    OpenAI-->>RAG: Returns answer
-    RAG-->>App: Returns to frontend
-    App-->>User: Displays Q&A
-
-    User->>App: Deletes file
-    App->>Cache: delete_file_and_artifacts(filename)
-    Cache-->>App: Confirms
-    App-->>User: Refreshes dropdowns
+    A --> B & E
+    B --> G
+    C --> D
+    D --> F
+    E --> F
+    C --> G
+    D --> G
 ```
 
 ---
 
-## Core Components
-- **`app.py`**: Main application entry. Initializes Dash, defines UI, and handles interactivity.  
-- **`src/graph_generator.py`**: Extracts graphs using OpenAI’s function-calling. Defines Pydantic models.  
-- **`src/text_processor.py`**: Parses PDFs with PyMuPDF, extracts relevant sections.  
-- **`src/file_manager.py`**: Handles saving, listing, and deleting files & cache.  
-- **`src/graph_rag.py`**: Query engine that checks cached files and generates contextual answers.  
-- **`assets/styles.css`**: CSS overrides for full-screen immersive graph visualization.  
+## Getting Started: A Beginner-Friendly Guide
 
----
+### Step 1: Set Up Your Workspace
+Obtain the project files by cloning the repository or downloading as a ZIP archive.
 
-## Setup & Installation
-
-### 1. Clone the Repository
 ```bash
 git clone <your-repository-url>
 cd corporate-filing-analysis-suite
 ```
 
-### 2. Create and Activate a Virtual Environment
+### Step 2: Install the Necessary Tools
+Create and activate a virtual environment:
+
 ```bash
 # Windows
 python -m venv venv
@@ -110,39 +147,44 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Set Up Environment Variables
-Create a `.env` file in the project root and add your OpenAI API key:
+### Step 3: Connect to the AI Brain
+Create a `.env` file in the project root with the following entry:
+
 ```bash
 OPENAI_API_KEY="sk-..."
 ```
 
-### 5. Run the Application
+### Step 4: Launch the Application
+Run the application locally:
+
 ```bash
 python app.py
 ```
-The app will run at: **http://127.0.0.1:8050**
+
+Access it at: **http://127.0.0.1:8050**
 
 ---
 
-## Usage
+## How to Use the Suite: A Quick Manual
 
 ### Document Management
-- Upload 10-K PDFs via drag-and-drop or file selector.  
-- Process documents with **"Process Document"**.  
-- Delete files with **"Delete Selected File"**.  
+- **Upload**: Import 10-K PDFs.  
+- **Process**: Extract text and generate graphs.  
+- **Delete**: Remove files and associated cache.  
 
 ### Graph Explorer
-- View processed documents as interactive graphs.  
-- Drag nodes, zoom, and pan for exploration.  
+- **View**: Explore interactive knowledge graphs.  
+- **Interact**: Move nodes, zoom, and examine relationships.  
 
 ### Query & Analysis
-- Select a document.  
-- Submit a question to receive AI-driven answers.  
+- **Select**: Choose a processed document.  
+- **Ask**: Submit questions for graph-based responses.  
 
 ---
 
