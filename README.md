@@ -18,63 +18,65 @@
 ---
 
 ## Overview: From Documents to Decisions
-The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10-Ks. These filings are converted into interactive knowledge graphs so that users can visualize entities and relationships and pose natural‑language questions for focused, evidence‑based answers.
+The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10‑K filings. These filings are converted into interactive knowledge graphs so users can visualize entities and relationships and pose natural‑language questions for focused, evidence‑based answers.
 
 ---
 
 ## What is a Knowledge Graph?
-A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex Knowledge graphs are often "expensive" to generate and induce high latency times. An optimal knowledge graph that captures key entity-relationship pairs for the most significant details, especially for complex financial documents like theForm 10K . For Form 10-Ks, the ontology of entities is:
+A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex knowledge graphs can be expensive to generate and may induce high latency. An optimal graph captures key entity–relationship pairs without duplication—especially important for long, information‑dense 10‑K documents.
 
-$$
-\mathcal{E} = \{ \mathrm{Company},\mathrm{Segment},\mathrm{Risk},\mathrm{Financial},\mathrm{Regulation},\mathrm{Executive},\mathrm{Event} \}
-$$
+**Example (high‑latency KG):**  
+<img width="1284" height="862" alt="complex-kg" src="https://github.com/user-attachments/assets/be02c074-4f43-411e-a24b-8ca97ab3ae38" />
 
-Entities extracted from a document $D$ are:
-$$
-\mathcal{V}(D)=\{v_1,\dots,v_n\},\quad v_k\in\mathcal{E}
-$$
+**Example (optimal KG without duplicates):**  
+<img width="809" height="625" alt="optimal-kg" src="https://github.com/user-attachments/assets/35ce254f-bf9e-4abe-bd7e-7bbc395ef658" />
 
-Relations between entities are:
+For 10‑Ks, the entity ontology is:
 $$
-R(D)=\{(v_i,r,v_j)\mid v_i,v_j\in\mathcal{V}(D),\ r\in\mathcal{R}\}
+\mathcal{E}=\{\mathrm{Company},\mathrm{Segment},\mathrm{Risk},\mathrm{Financial},\mathrm{Regulation},\mathrm{Executive},\mathrm{Event}\}
 $$
 
+Entities extracted from a document \(D\) are
+$$
+\mathcal{V}(D)=\{v_1,\dots,v_n\},\quad v_k\in\mathcal{E}.
+$$
+
+Relations between entities are
+$$
+R(D)=\{(v_i,r,v_j)\mid v_i,v_j\in\mathcal{V}(D),\ r\in\mathcal{R}\},
+$$
 with
 $$
-\mathcal{R}=\{\mathrm{OWNS},\mathrm{OPERATES},\mathrm{REPORTS},\mathrm{SUBJECT\_TO},\mathrm{MENTIONS},\mathrm{ASSOCIATED\_WITH}\}
+\mathcal{R}=\{\mathrm{OWNS},\mathrm{OPERATES},\mathrm{REPORTS},\mathrm{SUBJECT\_TO},\mathrm{MENTIONS},\mathrm{ASSOCIATED\_WITH}\}.
 $$
 
-**Examples**
+**Examples:**
 $$
-(\mathrm{UnitedHealth\ Group},\ \mathrm{OWNS},\ \mathrm{Optum\ Health})
-$$
-
-$$
-(\mathrm{UnitedHealth\ Group},\ \mathrm{REPORTS},\ \mathrm{Revenue}=\$372\,\mathrm{B})
+(\mathrm{UnitedHealth\ Group},\ \mathrm{OWNS},\ \mathrm{Optum\ Health}),\qquad
+(\mathrm{UnitedHealth\ Group},\ \mathrm{REPORTS},\ \mathrm{Revenue}=\$372\,\mathrm{B}),\qquad
+(\mathrm{UnitedHealth\ Group},\ \mathrm{SUBJECT\_TO},\ \mathrm{Regulatory\ risk}).
 $$
 
+The knowledge graph is
 $$
-(\mathrm{UnitedHealth\ Group},\ \mathrm{SUBJECT\_TO},\ \mathrm{Regulatory\ risk})
+\mathcal{G}(D)=(\mathcal{V},\mathcal{E}).
 $$
 
-The knowledge graph is:
-$$
-\mathcal{G}(D)=(\mathcal{V},\mathcal{E})
-$$
+> **Note:** GitHub renders LaTeX on `.md` files using KaTeX. Ensure you’re not viewing the **Raw** file and that equations aren’t inside code fences.
 
 ---
 
 ## What is RAG?
-**Retrieval‑Augmented Generation (RAG)** combines retrieval and generation: before producing an answer, the system retrieves relevant context (here, from the knowledge graph) to ground its response in verifiable information.
+**Retrieval‑Augmented Generation (RAG)** combines retrieval and generation. Before answering, the system retrieves relevant context (here, from the knowledge graph) to ground responses in verifiable information.
 
 ---
 
 ## The Power of Combining KG & RAG for 10-Ks
-Combining KG and RAG yields structured, context‑aware answers. Instead of matching text fragments, the system follows connections in the graph to address questions such as:
-- “What risks are linked to the Optum Health segment?”
-- “Which executives are associated with the company’s main revenue sources?”
+Combining KG and RAG yields structured, context‑aware answers. Instead of matching text fragments, the system follows connections in the graph to answer questions such as:
+- “What risks are linked to the Optum Health segment?”  
+- “Which executives are associated with the company’s primary revenue sources?”
 
-This results in faster, more accurate insights than simple text search.
+This provides faster, more accurate insights than simple text search.
 
 ---
 
@@ -92,17 +94,20 @@ This results in faster, more accurate insights than simple text search.
 ## System Architecture
 The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram (GitHub‑safe)
+### Simplified Architecture Diagram (GitHub‑safe, white background)
 ```mermaid
-graph TD
-    A[Dash Frontend]
-    B[File & Cache Manager]
-    C[10-K Text Processor]
-    D[Knowledge Graph Engine]
-    E[RAG Chat System]
-    F[OpenAI API]
-    G[File System (Uploads & Cache)]
+%%{init: {'theme': 'neutral', 'themeVariables': { 'background': 'white' }}}%%
+flowchart LR
+    U([👤 User])
+    A([🖥️ Dash Frontend])
+    B([🗂️ File & Cache Manager])
+    C([📄 10-K Text Processor])
+    D([🕸️ Knowledge Graph Engine])
+    E([💬 RAG Chat System])
+    F([🧠 OpenAI API])
+    G([💾 File System])
 
+    U --> A
     A --> B
     A --> E
     B --> G
@@ -115,38 +120,39 @@ graph TD
 
 ### Detailed Workflow Diagram (GitHub‑safe)
 ```mermaid
+%%{init: {'theme': 'neutral', 'themeVariables': { 'background': 'white' }}}%%
 sequenceDiagram
     actor User
     participant App as Dash Frontend
-    participant Services as Backend Services
+    participant S as Backend Services
     participant Cache as File System
     participant OpenAI as OpenAI API
 
     Note over User,OpenAI: Document Processing
     User->>App: Upload 10-K PDF
-    App->>Services: Save file
-    Services->>Cache: Store in /uploads
-    Services->>App: Acknowledge save
+    App->>S: Save file
+    S->>Cache: Store in /uploads
+    S->>App: Acknowledge save
     App->>User: Update file list
 
     User->>App: Click "Process Document"
-    App->>Services: Process PDF
-    Services->>Cache: Write to /processed_texts
-    Services->>Services: Generate graph
-    Services->>OpenAI: Send text chunks
-    OpenAI-->>Services: Return structured graph
-    Services->>Cache: Write graph.json to /graphs
-    Services->>App: Return graph data
+    App->>S: Process PDF
+    S->>Cache: Write to /processed_texts
+    S->>S: Generate graph
+    S->>OpenAI: Send text chunks
+    OpenAI-->>S: Return structured graph
+    S->>Cache: Write graph.json to /graphs
+    S->>App: Return graph data
     App->>User: Display graph
 
     Note over User,OpenAI: Query & Analysis
     User->>App: Ask question
-    App->>Services: Query RAG
-    Services->>Cache: Verify graph.json exists
-    Cache-->>Services: Confirmed
-    Services->>OpenAI: Send prompt
-    OpenAI-->>Services: Return answer
-    Services->>App: Send answer
+    App->>S: Query RAG
+    S->>Cache: Verify graph.json exists
+    Cache-->>S: Confirmed
+    S->>OpenAI: Send prompt
+    OpenAI-->>S: Return answer
+    S->>App: Send answer
     App->>User: Show response
 ```
 
@@ -166,8 +172,7 @@ Create and activate a virtual environment, then install dependencies.
 ```bash
 # Windows
 python -m venv venv
-.
-env\Scripts ctivate
+.\venv\Scripts\activate
 
 # macOS/Linux
 python3 -m venv venv
