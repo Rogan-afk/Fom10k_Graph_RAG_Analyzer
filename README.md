@@ -62,7 +62,8 @@ The first step towards an optimal KG is to define the entity ontology:
 For a given document **D**:  
 
 <p align="center">
-  <img width="599" height="288" alt="entity-extraction" src="https://github.com/user-attachments/assets/7403df1b-2557-4702-8e56-ea36c713607c" />
+  <img width="517" height="226" alt="image" src="https://github.com/user-attachments/assets/2dcf8fb0-ca3d-43e9-b0f6-bb6421bafb39" />
+
 </p>
 
 ---
@@ -278,3 +279,4 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
