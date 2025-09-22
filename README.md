@@ -36,41 +36,41 @@ The application is modular and efficient. The frontend, built with **Dash**, com
 ```mermaid
 sequenceDiagram
     participant User
-    participant "Dash Frontend (app.py)" as App
-    participant "Text Processor" as TextProc
-    participant "Graph Generator" as GraphGen
-    participant "File System (Cache)" as Cache
-    participant "OpenAI API" as OpenAI
-    participant "Graph RAG" as RAG
+    participant App as Dash Frontend (app.py)
+    participant TextProc as Text Processor
+    participant GraphGen as Graph Generator
+    participant Cache as File System (Cache)
+    participant OpenAI as OpenAI API
+    participant RAG as Graph RAG
 
-    User->>+App: Uploads 10-K PDF
-    App->>+Cache: Saves PDF to /uploads
-    Cache-->>-App: Confirms Save
-    App-->>-User: Updates File Dropdowns
+    User->>App: Uploads 10-K PDF
+    App->>Cache: Saves PDF to /uploads
+    Cache-->>App: Confirms Save
+    App-->>User: Updates File Dropdowns
 
-    User->>+App: Selects file & Clicks "Process"
-    App->>+TextProc: process_pdf_to_text(pdf_path)
+    User->>App: Selects file & clicks "Process"
+    App->>TextProc: process_pdf_to_text(pdf_path)
     TextProc->>Cache: Reads PDF
     TextProc-->>Cache: Writes extracted text
-    TextProc-->>-App: Returns text
+    TextProc-->>App: Returns text
 
-    App->>+GraphGen: generate_knowledge_graph(text)
+    App->>GraphGen: generate_knowledge_graph(text)
     GraphGen->>OpenAI: Sends text chunks
     OpenAI-->>GraphGen: Returns structured graph data (JSON)
-    GraphGen->>+Cache: Writes graph.json
-    GraphGen-->>-App: Returns graph data
-
-    App-->>-User: Displays graph
+    GraphGen->>Cache: Writes graph.json
+    GraphGen-->>App: Returns graph data
+    App-->>User: Displays graph
 
     User->>App: Asks question in "Query & Analysis"
-    App->>+RAG: query(filename, question)
+    App->>RAG: query(filename, question)
     RAG->>Cache: Checks graph.json
     Cache-->>RAG: Confirms
+    Note over RAG,Cache: Single Source of Truth!
 
-    RAG->>+OpenAI: Sends Analyst prompt
-    OpenAI-->>-RAG: Returns answer
-    RAG-->>-App: Returns to frontend
-    App-->>-User: Displays Q&A
+    RAG->>OpenAI: Sends Analyst prompt
+    OpenAI-->>RAG: Returns answer
+    RAG-->>App: Returns to frontend
+    App-->>User: Displays Q&A
 
     User->>App: Deletes file
     App->>Cache: delete_file_and_artifacts(filename)
