@@ -20,7 +20,7 @@
 ## Overview: From Documents to Decisions
 Knowledge Graph–based RAG systems often outperform traditional vector-based RAGs because they capture contextual relations between entities more accurately.
 
-While many frameworks for KG generation exist, they typically run on a single thread and lack a purpose-defined scheme to consistently map entities, relationships, and events into a coherent node–edge structure.
+While many frameworks for KG generation exist, they typically run on a single thread and lack a purpose-defined scheme to consistently map entities, relationships, and events into a consistent node–edge structure.
 
 This project is an attempt to create more optimal ontologies specifically for SEC Form 10-K filings. It introduces a simplified scheme that enables faster KG construction by leveraging two-thread parallelism.
 
@@ -282,6 +282,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
