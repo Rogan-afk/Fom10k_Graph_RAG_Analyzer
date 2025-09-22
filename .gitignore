@@ -1,0 +1,16 @@
+Virtual Environment
+venv/
+.venv/
+*.pyc
+pycache/
+
+Environment files
+.env
+
+Uploaded and Generated files
+/uploads/
+/graphs/
+
+IDE files
+.idea/
+.vscode/

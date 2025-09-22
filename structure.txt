@@ -1,0 +1,13 @@
+knowledge-graph-rag/
+├── .env
+├── .gitignore
+├── app.py
+├── requirements.txt
+├── src/
+│   ├── __init__.py
+│   ├── file_manager.py
+│   ├── graph_generator.py
+│   ├── graph_rag.py
+│   └── text_processor.py
+└── assets/
+    └── styles.css

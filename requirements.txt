@@ -1,0 +1,8 @@
+gradio
+python-dotenv
+langchain
+langchain-openai
+pyvis
+PyMuPDF
+flask
+networkx
