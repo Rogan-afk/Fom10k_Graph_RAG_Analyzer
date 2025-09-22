@@ -101,7 +101,7 @@ Extracted edge set:
 ---
 
 ### Form 10-K as a Graph
-In short, each Form 10-K becomes a graph:  
+In short, A typical Form 10-K graph looks like:  
 
 <p align="center">
   <img width="597" height="44" alt="graph-summary" src="https://github.com/user-attachments/assets/e44431e1-e489-441c-b00c-39e036ec4bcc" />
@@ -283,5 +283,6 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
