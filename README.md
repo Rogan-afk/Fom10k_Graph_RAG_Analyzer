@@ -88,27 +88,17 @@ This provides faster, more accurate insights than simple text search.
 ## System Architecture
 The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram (GitHub‑safe, high‑contrast)
+### Simplified Architecture Diagram (strict Mermaid, ASCII‑safe)
 ```mermaid
-%%{init: {"theme": "neutral"}}%%
 flowchart LR
-    U([User])
-    A([Dash Frontend])
-    B([File & Cache Manager])
-    C([10-K Text Processor])
-    D([Knowledge Graph Engine])
-    E([RAG Chat System])
-    F([OpenAI API])
-    G([File System (Uploads & Cache)])
-
-    style U fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style A fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style B fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style C fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style D fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style E fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style F fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
-    style G fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    U["User"]
+    A["Dash Frontend"]
+    B["File & Cache Manager"]
+    C["10-K Text Processor"]
+    D["Knowledge Graph Engine"]
+    E["RAG Chat System"]
+    F["OpenAI API"]
+    G["File System (Uploads & Cache)"]
 
     U --> A
     A --> B
@@ -121,15 +111,14 @@ flowchart LR
     D --> G
 ```
 
-### Detailed Workflow Diagram (GitHub‑safe, high‑contrast)
+### Detailed Workflow Diagram (strict Mermaid, ASCII‑safe)
 ```mermaid
-%%{init: {"theme": "neutral"}}%%
 sequenceDiagram
     actor User
-    participant App as Dash Frontend
-    participant S as Backend Services
-    participant Cache as File System
-    participant OpenAI as OpenAI API
+    participant App as "Dash Frontend"
+    participant S as "Backend Services"
+    participant Cache as "File System"
+    participant OpenAI as "OpenAI API"
 
     Note over User,OpenAI: Document Processing
     User->>App: Upload 10-K PDF
