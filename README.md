@@ -18,7 +18,7 @@
 ---
 
 ## Overview: From Documents to Decisions
-The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10‑K filings. These filings are converted into interactive knowledge graphs so users can visualize entities and relationships and pose natural‑language questions for targeted, evidence‑based answers.
+The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10‑K filings. These filings are converted into interactive knowledge graphs so that users can visualize entities and relationships and ask natural‑language questions for targeted, evidence‑based answers.
 
 ---
 
@@ -94,20 +94,24 @@ This provides faster, more accurate insights than simple text search.
 ## System Architecture
 The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram (GitHub‑safe, crisp fonts, white background)
+### Simplified Architecture Diagram (GitHub‑safe, high‑contrast arrows)
 ```mermaid
 %%{init: {
   "theme": "base",
   "themeVariables": {
     "background": "white",
-    "primaryTextColor": "#111111",
-    "textColor": "#111111",
-    "lineColor": "#111111",
+    "primaryTextColor": "#0B0B0B",
+    "textColor": "#0B0B0B",
+    "primaryBorderColor": "#0B0B0B",
+    "lineColor": "#0B0B0B",
     "fontSize": "16px",
     "fontFamily": "Inter, Segoe UI, Roboto, Arial, sans-serif"
   }
 }}%%
 flowchart LR
+    classDef default fill:#FFFFFF,stroke:#0B0B0B,stroke-width:2px,color:#0B0B0B;
+    linkStyle default stroke:#0B0B0B,stroke-width:2px,color:#0B0B0B;
+
     U([👤 User])
     A([🖥️ Dash Frontend])
     B([🗂️ File & Cache Manager])
@@ -134,19 +138,21 @@ flowchart LR
   "theme": "base",
   "themeVariables": {
     "background": "white",
-    "primaryTextColor": "#111111",
-    "textColor": "#111111",
-    "lineColor": "#111111",
+    "primaryTextColor": "#0B0B0B",
+    "textColor": "#0B0B0B",
+    "lineColor": "#0B0B0B",
     "fontSize": "16px",
     "fontFamily": "Inter, Segoe UI, Roboto, Arial, sans-serif",
-    "noteBkgColor": "#fff8e1",
-    "noteTextColor": "#111111"
+    "noteBkgColor": "#FFF4C2",
+    "noteTextColor": "#0B0B0B",
+    "activationBkgColor": "#FFFFFF",
+    "activationBorderColor": "#0B0B0B"
   },
   "sequence": {
     "mirrorActors": false,
     "rightAngles": true,
     "showSequenceNumbers": false,
-    "actorMargin": 50
+    "actorMargin": 60
   }
 }}%%
 sequenceDiagram
