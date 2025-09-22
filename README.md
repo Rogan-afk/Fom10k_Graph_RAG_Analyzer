@@ -25,12 +25,6 @@ The **Corporate Filing Analysis Suite** assists in interpreting complex financia
 ## What is a Knowledge Graph?
 A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex knowledge graphs can be expensive to generate and may induce high latency. An optimal graph captures key entity–relationship pairs without duplication—especially important for long, information‑dense 10‑K documents.
 
-**Example (high‑latency KG):**  
-<img width="1284" height="862" alt="complex-kg" src="https://github.com/user-attachments/assets/be02c074-4f43-411e-a24b-8ca97ab3ae38" />
-
-**Example (optimal KG without duplicates):**  
-<img width="809" height="625" alt="optimal-kg" src="https://github.com/user-attachments/assets/35ce254f-bf9e-4abe-bd7e-7bbc395ef658" />
-
 For 10‑Ks, the entity ontology is:
 $$
 \mathcal{E}=\{\mathrm{Company},\mathrm{Segment},\mathrm{Risk},\mathrm{Financial},\mathrm{Regulation},\mathrm{Executive},\mathrm{Event}\}
@@ -52,8 +46,8 @@ $$
 
 **Examples:**
 $$
-(\mathrm{UnitedHealth\ Group},\ \mathrm{OWNS},\ \mathrm{Optum\ Health}),\qquad
-(\mathrm{UnitedHealth\ Group},\ \mathrm{REPORTS},\ \mathrm{Revenue}=\$372\,\mathrm{B}),\qquad
+(\mathrm{UnitedHealth\ Group},\ \mathrm{OWNS},\ \mathrm{Optum\ Health}),\quad
+(\mathrm{UnitedHealth\ Group},\ \mathrm{REPORTS},\ \mathrm{Revenue}=\$372\,\mathrm{B}),\quad
 (\mathrm{UnitedHealth\ Group},\ \mathrm{SUBJECT\_TO},\ \mathrm{Regulatory\ risk}).
 $$
 
@@ -62,7 +56,7 @@ $$
 \mathcal{G}(D)=(\mathcal{V},\mathcal{E}).
 $$
 
-> **Tip:** On GitHub, ensure you’re not viewing the **Raw** file; KaTeX math doesn’t render in Raw view.
+> **Tip:** On GitHub, view the Markdown file (not Raw). KaTeX math will not render in Raw view.
 
 ---
 
@@ -94,32 +88,27 @@ This provides faster, more accurate insights than simple text search.
 ## System Architecture
 The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram (GitHub‑safe, high‑contrast arrows)
+### Simplified Architecture Diagram (GitHub‑safe, high‑contrast)
 ```mermaid
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "background": "white",
-    "primaryTextColor": "#0B0B0B",
-    "textColor": "#0B0B0B",
-    "primaryBorderColor": "#0B0B0B",
-    "lineColor": "#0B0B0B",
-    "fontSize": "16px",
-    "fontFamily": "Inter, Segoe UI, Roboto, Arial, sans-serif"
-  }
-}}%%
+%%{init: {"theme": "neutral"}}%%
 flowchart LR
-    classDef default fill:#FFFFFF,stroke:#0B0B0B,stroke-width:2px,color:#0B0B0B;
-    linkStyle default stroke:#0B0B0B,stroke-width:2px,color:#0B0B0B;
+    U([User])
+    A([Dash Frontend])
+    B([File & Cache Manager])
+    C([10-K Text Processor])
+    D([Knowledge Graph Engine])
+    E([RAG Chat System])
+    F([OpenAI API])
+    G([File System (Uploads & Cache)])
 
-    U([👤 User])
-    A([🖥️ Dash Frontend])
-    B([🗂️ File & Cache Manager])
-    C([📄 10-K Text Processor])
-    D([🕸️ Knowledge Graph Engine])
-    E([💬 RAG Chat System])
-    F([🧠 OpenAI API])
-    G([💾 File System])
+    style U fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style A fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style B fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style C fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style D fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style E fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style F fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    style G fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
 
     U --> A
     A --> B
@@ -132,29 +121,9 @@ flowchart LR
     D --> G
 ```
 
-### Detailed Workflow Diagram (GitHub‑safe, larger fonts, high contrast)
+### Detailed Workflow Diagram (GitHub‑safe, high‑contrast)
 ```mermaid
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "background": "white",
-    "primaryTextColor": "#0B0B0B",
-    "textColor": "#0B0B0B",
-    "lineColor": "#0B0B0B",
-    "fontSize": "16px",
-    "fontFamily": "Inter, Segoe UI, Roboto, Arial, sans-serif",
-    "noteBkgColor": "#FFF4C2",
-    "noteTextColor": "#0B0B0B",
-    "activationBkgColor": "#FFFFFF",
-    "activationBorderColor": "#0B0B0B"
-  },
-  "sequence": {
-    "mirrorActors": false,
-    "rightAngles": true,
-    "showSequenceNumbers": false,
-    "actorMargin": 60
-  }
-}}%%
+%%{init: {"theme": "neutral"}}%%
 sequenceDiagram
     actor User
     participant App as Dash Frontend
