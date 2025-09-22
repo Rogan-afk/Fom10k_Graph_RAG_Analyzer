@@ -86,7 +86,7 @@ This provides faster, more accurate insights than simple text search.
 ---
 
 ## System Architecture
-The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
+The **Dash frontend (Gradio web UI)** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
 ### Simplified Architecture Diagram (strict Mermaid, ASCII‑safe)
 ```mermaid
@@ -220,3 +220,4 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
