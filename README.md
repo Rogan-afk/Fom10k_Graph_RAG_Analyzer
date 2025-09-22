@@ -18,7 +18,7 @@
 ---
 
 ## Overview: From Documents to Decisions
-The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10‑K filings. These filings are converted into interactive knowledge graphs so users can visualize entities and relationships and pose natural‑language questions for focused, evidence‑based answers.
+The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10‑K filings. These filings are converted into interactive knowledge graphs so users can visualize entities and relationships and pose natural‑language questions for targeted, evidence‑based answers.
 
 ---
 
@@ -62,7 +62,7 @@ $$
 \mathcal{G}(D)=(\mathcal{V},\mathcal{E}).
 $$
 
-> **Note:** GitHub renders LaTeX on `.md` files using KaTeX. Ensure you’re not viewing the **Raw** file and that equations aren’t inside code fences.
+> **Tip:** On GitHub, ensure you’re not viewing the **Raw** file; KaTeX math doesn’t render in Raw view.
 
 ---
 
@@ -94,9 +94,19 @@ This provides faster, more accurate insights than simple text search.
 ## System Architecture
 The **Dash frontend** provides the user interface. The **Python backend** manages parsing, graph generation, retrieval, and API communication.
 
-### Simplified Architecture Diagram (GitHub‑safe, white background)
+### Simplified Architecture Diagram (GitHub‑safe, crisp fonts, white background)
 ```mermaid
-%%{init: {'theme': 'neutral', 'themeVariables': { 'background': 'white' }}}%%
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "white",
+    "primaryTextColor": "#111111",
+    "textColor": "#111111",
+    "lineColor": "#111111",
+    "fontSize": "16px",
+    "fontFamily": "Inter, Segoe UI, Roboto, Arial, sans-serif"
+  }
+}}%%
 flowchart LR
     U([👤 User])
     A([🖥️ Dash Frontend])
@@ -118,9 +128,27 @@ flowchart LR
     D --> G
 ```
 
-### Detailed Workflow Diagram (GitHub‑safe)
+### Detailed Workflow Diagram (GitHub‑safe, larger fonts, high contrast)
 ```mermaid
-%%{init: {'theme': 'neutral', 'themeVariables': { 'background': 'white' }}}%%
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "white",
+    "primaryTextColor": "#111111",
+    "textColor": "#111111",
+    "lineColor": "#111111",
+    "fontSize": "16px",
+    "fontFamily": "Inter, Segoe UI, Roboto, Arial, sans-serif",
+    "noteBkgColor": "#fff8e1",
+    "noteTextColor": "#111111"
+  },
+  "sequence": {
+    "mirrorActors": false,
+    "rightAngles": true,
+    "showSequenceNumbers": false,
+    "actorMargin": 50
+  }
+}}%%
 sequenceDiagram
     actor User
     participant App as Dash Frontend
