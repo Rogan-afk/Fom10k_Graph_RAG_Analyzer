@@ -18,9 +18,13 @@
 ---
 
 ## Overview: From Documents to Decisions
-The **Corporate Filing Analysis Suite** assists in interpreting complex financial documents, particularly SEC Form 10-K filings.  
+Knowledge Graph–based RAG systems often outperform traditional vector-based RAGs because they capture contextual relations between entities more accurately.
 
-These filings are converted into interactive knowledge graphs so that users can **visualize entities and relationships** and **ask natural-language questions** for targeted, evidence-based answers.
+While many frameworks for KG generation exist, they typically run on a single thread and lack a purpose-defined scheme to consistently map entities, relationships, and events into a coherent node–edge structure.
+
+The form10k_graph_rag_analyzer is an attempt to create more optimal ontologies specifically for SEC Form 10-K filings. It introduces a simplified scheme that enables faster KG construction by leveraging two-thread parallelism.
+
+This system is built on OpenAI’s API, with knowledge graphs stored as well-defined local structures, avoiding reliance on external web-based graph databases. Deployment is handled through a Gradio interface for ease of use..
 
 ---
 
@@ -31,7 +35,7 @@ Complex knowledge graphs can be expensive to generate and may induce high latenc
 
 ---
 
-### Example: A Complex KG (with duplicates)
+### Example: A Complex High latency inducing KG 
 <p align="center">
   <img width="1284" height="862" alt="complex-kg" src="https://github.com/user-attachments/assets/be02c074-4f43-411e-a24b-8ca97ab3ae38" />
 </p>
@@ -279,4 +283,5 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
