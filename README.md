@@ -28,7 +28,7 @@ This system is built on OpenAI’s API, with knowledge graphs stored as well-def
 
 ---
 
-## What is a Knowledge Graph?
+## Knowledge Graph
 A **Knowledge Graph (KG)** represents information as a network of **entities (nodes)** and **relationships (edges)**.  
 
 Complex knowledge graphs can be expensive to generate and may induce high latency.
@@ -114,15 +114,14 @@ In short, A typical Form 10-K graph looks like:
 - “Which segments contribute to reported revenue?”  
 
 ---
-
-## What is RAG?
+## Base RAG
 **Retrieval-Augmented Generation (RAG)** combines **retrieval** and **generation**.  
 
 Before answering, the system retrieves **relevant context** (here, from the knowledge graph) to ground responses in verifiable information.
 
 ---
 
-## The Power of Combining KG & RAG for 10-Ks
+## Combining KG & RAG for 10-Ks
 Combining KG and RAG yields structured, context-aware answers.  
 
 Instead of matching text fragments, the system **follows graph connections** to answer questions such as:
@@ -150,11 +149,11 @@ The **Python backend** manages parsing, graph generation, retrieval, and API com
 
 ---
 
-### Simplified Architecture Diagram
+### Architecture Overview
 ```mermaid
 flowchart LR
     U["User"]
-    A["Dash Frontend"]
+    A["Dash Frontend- Gradio WEB UI"]
     B["File & Cache Manager"]
     C["10-K Text Processor"]
     D["Knowledge Graph Engine"]
@@ -175,7 +174,7 @@ flowchart LR
 
 ---
 
-### Detailed Workflow Diagram
+### Overall Workflow 
 ```mermaid
 sequenceDiagram
     actor User
@@ -214,7 +213,7 @@ sequenceDiagram
 
 ---
 
-## Getting Started: A Beginner-Friendly Guide
+## Getting Started:
 
 ### Step 1: Set Up Your Workspace
 ```bash
@@ -250,7 +249,7 @@ Then open **The local gradio URL that appears on your terminal** in your browser
 
 ---
 
-## How to Use the Suite: A Quick Manual
+## How to Use the Suite:
 
 ### Document Management
 - **Upload** a 10-K PDF.  
@@ -283,6 +282,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
