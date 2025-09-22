@@ -23,7 +23,7 @@ The **Corporate Filing Analysis Suite** assists in interpreting complex financia
 ---
 
 ## What is a Knowledge Graph?
-A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). For Form 10-Ks, the ontology of entities is:
+A **Knowledge Graph (KG)** represents information as a network of entities (nodes) and relationships (edges). Complex Knowledge graphs are often "expensive" to generate and induce high latency times. An optimal knowledge graph that captures key entity-relationship pairs for the most significant details, especially for complex financial documents like theForm 10K . For Form 10-Ks, the ontology of entities is:
 
 $$
 \mathcal{E} = \{ \text{Company}, \text{Segment}, \text{Risk}, \text{Financial}, \text{Regulation}, \text{Executive}, \text{Event} \}
@@ -228,3 +228,4 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
