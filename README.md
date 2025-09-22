@@ -246,7 +246,7 @@ OPENAI_API_KEY="sk-..."
 python app.py
 ```
 
-Then open **http://127.0.0.1:8050** in your browser.
+Then open **The local gradio URL that appears on your terminal** in your browser.
 
 ---
 
@@ -283,6 +283,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
