@@ -138,7 +138,7 @@ def load_visualization_from_file(filename):
 
 # --- Gradio User Interface ---
 with gr.Blocks(theme=gr.themes.Default(), css="static/styles.css") as demo:
-    gr.Markdown("# Corporate Filing Analysis Suite")
+    gr.Markdown("# Form10k_Graph_RAG_Analyzer")
     gr.Markdown("An enterprise tool for converting SEC 10-K filings into queryable knowledge graphs.")
     all_files = gr.State(list_uploaded_files())
     
