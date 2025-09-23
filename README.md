@@ -1,18 +1,17 @@
 # Form10k_Graph_RAG_Analyzer
 
 ## Table of Contents
-- [Overview: From Documents to Decisions](#overview-from-documents-to-decisions)  
+- [Overview: From Documents to Decisions](#overview-from-documents-to-decisions)
+- [How to Use:](#how-to-use)  
 - [What is a Knowledge Graph?](#what-is-a-knowledge-graph)  
 - [What is RAG?](#what-is-rag)  
 - [The Power of Combining KG & RAG for 10-Ks](#the-power-of-combining-kg--rag-for-10-ks)  
-- [Features](#features)  
 - [System Architecture](#system-architecture)  
 - [Getting Started: A Beginner-Friendly Guide](#getting-started-a-beginner-friendly-guide)  
   - [Step 1: Set Up Your Workspace](#step-1-set-up-your-workspace)  
   - [Step 2: Install the Necessary Tools](#step-2-install-the-necessary-tools)  
   - [Step 3: Connect to the AI Brain](#step-3-connect-to-the-ai-brain)  
-  - [Step 4: Launch the Application](#step-4-launch-the-application)  
-- [How to Use the Suite: A Quick Manual](#how-to-use-the-suite-a-quick-manual)  
+  - [Step 4: Launch the Application](#step-4-launch-the-application)    
 - [Project Directory Structure](#project-directory-structure)  
 
 ---
@@ -26,7 +25,11 @@ This project is an attempt to create more optimal ontologies specifically for SE
 
 This system is built on OpenAI’s API, with knowledge graphs stored as well-defined local structures, avoiding reliance on external web-based graph databases. Deployment is handled through a Gradio interface for ease of use..
 
+![graphrag](https://github.com/user-attachments/assets/8ff5b574-9c7a-4109-9bf2-9d30e736d322)
+
+
 ---
+
 
 ## Knowledge Graph
 A **Knowledge Graph (KG)** represents information as a network of **entities (nodes)** and **relationships (edges)**.  
@@ -52,6 +55,35 @@ An optimal graph captures key entity–relationship pairs **without duplication*
 </p>
 
 ---
+
+
+## How to Use:
+
+### Document Processing (first tab)
+<img width="1695" height="474" alt="image" src="https://github.com/user-attachments/assets/09f971ba-c73e-47df-ad4e-c0cdbe2f3877" />
+
+
+- **Upload** a 10-K PDF.  (Ensure it's in the right format. Best works with at most three documents at a time. Complex and longer documents take more time to proces)
+- **Process** to extract text and generate the graph.  
+- **Delete** a file and its cached artifacts when no longer needed.  
+
+### Graph Visualization (third tab)
+<img width="1729" height="467" alt="image" src="https://github.com/user-attachments/assets/da317188-0b6f-4b5b-b22b-6a24c7013f69" />
+
+- **View** the generated knowledge graph.  
+- **Interact** with nodes: drag, zoom, and inspect relationships.  
+
+### Query & Analysis (Second tab)
+<img width="1655" height="736" alt="image" src="https://github.com/user-attachments/assets/092bb8e7-2889-4f8e-99aa-9f263bbed1f1" />
+
+- **Select** a processed document.  
+- **Ask** a question and hit Enter; the system responds using KG-RAG context.  
+
+---
+
+
+
+
 
 ### Ontology of Entities
 The first step towards an optimal KG is to define the entity ontology:  
@@ -132,16 +164,7 @@ This provides **faster, more accurate insights** than simple text search.
 
 ---
 
-## Features
-- **Interactive Dashboard** – Professional, multi-tab UI for streamlined workflows.  
-- **Intelligent 10-K Parsing** – Extraction of key sections for focused analysis.  
-- **Comprehensive Knowledge Graph** – High-precision mapping of entities and relationships.  
-- **Immersive Graph Explorer** – Interactive visualization with zoom, drag, and pan.  
-- **Conversational Q&A** – KG-RAG integration for grounded answers.  
-- **Efficient File Management** – PDF uploads, caching, and secure deletion.  
-- **Responsive Performance** – Asynchronous background processing.  
 
----
 
 ## System Architecture
 The **Dash frontend (Gradio web UI)** provides the user interface.  
@@ -249,29 +272,6 @@ Then open **The local gradio URL that appears on your terminal** in your browser
 
 ---
 
-## How to Use:
-
-### Document Processing (first tab)
-<img width="1695" height="474" alt="image" src="https://github.com/user-attachments/assets/09f971ba-c73e-47df-ad4e-c0cdbe2f3877" />
-
-
-- **Upload** a 10-K PDF.  (Ensure it's in the right format. Best works with at most three documents at a time. Complex and longer documents take more time to proces)
-- **Process** to extract text and generate the graph.  
-- **Delete** a file and its cached artifacts when no longer needed.  
-
-### Graph Visualization (third tab)
-<img width="1729" height="467" alt="image" src="https://github.com/user-attachments/assets/da317188-0b6f-4b5b-b22b-6a24c7013f69" />
-
-- **View** the generated knowledge graph.  
-- **Interact** with nodes: drag, zoom, and inspect relationships.  
-
-### Query & Analysis (Second tab)
-<img width="1655" height="736" alt="image" src="https://github.com/user-attachments/assets/092bb8e7-2889-4f8e-99aa-9f263bbed1f1" />
-
-- **Select** a processed document.  
-- **Ask** questions; the system responds using KG-RAG context.  
-
----
 
 ## Project Directory Structure
 ```
@@ -289,6 +289,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
