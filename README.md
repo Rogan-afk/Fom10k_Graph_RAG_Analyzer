@@ -10,7 +10,7 @@
 - [Getting Started: A Beginner-Friendly Guide](#getting-started-a-beginner-friendly-guide)  
   - [Step 1: Set Up Your Workspace](#step-1-set-up-your-workspace)  
   - [Step 2: Install the Necessary Tools](#step-2-install-the-necessary-tools)  
-  - [Step 3: Connect to the AI Brain](#step-3-connect-to-the-ai-brain)  
+  - [Step 3: Connect to the AI API](#step-3-connect-to-the-ai-brain)  
   - [Step 4: Launch the Application](#step-4-launch-the-application)    
 - [Project Directory Structure](#project-directory-structure)  
 
@@ -258,7 +258,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 3: Connect to the AI Brain
+### Step 3: Connect to the AI API
 ```bash
 OPENAI_API_KEY="sk-..."
 ```
@@ -289,6 +289,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
