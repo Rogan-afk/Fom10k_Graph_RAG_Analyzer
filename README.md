@@ -23,7 +23,7 @@ While many frameworks for KG generation exist, they typically run on a single th
 
 This project is an attempt to create more optimal ontologies specifically for SEC Form 10-K filings. It introduces a simplified scheme that enables faster KG construction by leveraging two-thread parallelism.
 
-This system is built on OpenAI’s API, with knowledge graphs stored as well-defined local structures, avoiding reliance on external web-based graph databases. Deployment is handled through a Gradio interface for ease of use..
+This system is built on OpenAI’s API, with knowledge graphs stored as local structures (json outputs), avoiding reliance on external web-based graph databases. Deployment is handled through a Gradio interface for ease of use..
 
 ![graphrag](https://github.com/user-attachments/assets/8ff5b574-9c7a-4109-9bf2-9d30e736d322)
 
@@ -289,6 +289,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
