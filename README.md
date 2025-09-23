@@ -249,7 +249,7 @@ Then open **The local gradio URL that appears on your terminal** in your browser
 
 ---
 
-## How to Use the Suite:
+## How to Use:
 
 ### Document Processing (first tab)
 <img width="1695" height="474" alt="image" src="https://github.com/user-attachments/assets/09f971ba-c73e-47df-ad4e-c0cdbe2f3877" />
@@ -289,6 +289,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
