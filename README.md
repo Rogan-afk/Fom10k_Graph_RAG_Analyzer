@@ -251,16 +251,23 @@ Then open **The local gradio URL that appears on your terminal** in your browser
 
 ## How to Use the Suite:
 
-### Document Management
-- **Upload** a 10-K PDF.  
+### Document Processing (first tab)
+<img width="1695" height="474" alt="image" src="https://github.com/user-attachments/assets/09f971ba-c73e-47df-ad4e-c0cdbe2f3877" />
+
+
+- **Upload** a 10-K PDF.  (Ensure it's in the right format. Best works with at most three documents at a time. Complex and longer documents take more time to proces)
 - **Process** to extract text and generate the graph.  
 - **Delete** a file and its cached artifacts when no longer needed.  
 
-### Graph Explorer
+### Graph Visualization (third tab)
+<img width="1729" height="467" alt="image" src="https://github.com/user-attachments/assets/da317188-0b6f-4b5b-b22b-6a24c7013f69" />
+
 - **View** the generated knowledge graph.  
 - **Interact** with nodes: drag, zoom, and inspect relationships.  
 
-### Query & Analysis
+### Query & Analysis (Second tab)
+<img width="1655" height="736" alt="image" src="https://github.com/user-attachments/assets/092bb8e7-2889-4f8e-99aa-9f263bbed1f1" />
+
 - **Select** a processed document.  
 - **Ask** questions; the system responds using KG-RAG context.  
 
@@ -282,6 +289,7 @@ corporate-filing-analysis-suite/
 └── assets/
     └── styles.css
 ```
+
 
 
 
